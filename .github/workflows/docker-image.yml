@@ -79,7 +79,7 @@ jobs:
         timeout: 60s
         script: |
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
-          run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+          sudo docker stop docker-cicd
           sudo docker run --name docker-cicd -it -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
           udo docker system prune -f
 
