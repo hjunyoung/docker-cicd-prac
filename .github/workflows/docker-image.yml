@@ -80,7 +80,7 @@ jobs:
         script: |
           sudo docker stop docker_cicd
           sudo docker rm docker_cicd
-          sudo docker run -it -d -p 8080:8080 --name docker_cicd ${{ secrets.DOCKERHUB_USERNAME }}/${{DOCKER_IMAGE_NAME}}
+          sudo docker run -it -d -p 8080:8080 --name docker_cicd ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
 
     # (11) REMOVE Github IP FROM security group
     - name: Remove IP FROM security group
