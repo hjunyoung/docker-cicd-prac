@@ -15,7 +15,7 @@ public class HelloController {
 
     @RequestMapping("/")
     public String sample() {
-        return "Hello!!! Awesome cicd";
+        return "Hello!!! AWESOME DOCKER!!!!!";
     }
 
     @GetMapping("/hi")
