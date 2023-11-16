@@ -9,6 +9,8 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2 
+  DOCKER_CONTAINER: docker_cicd
+  DOCKER_IMAGE_NAME: docker-prac-ci
 
 jobs:
   deploy: 
@@ -37,7 +39,7 @@ jobs:
     
     # (4) Docker 이미지 Build
     - name: docker image build
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci .
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{DOCKER_IMAGE_NAME}} .
     
     # (5) DockerHub Login
     - name: docker login 
@@ -48,7 +50,7 @@ jobs:
 
     # (6) Docker Hub push
     - name: docker Hub push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{DOCKER_IMAGE_NAME}}
 
     # (7) GET GitHub IP
     - name: get GitHub IP 
@@ -78,9 +80,9 @@ jobs:
         port: ${{ secrets.EC2_SSH_PORT }}
         timeout: 60s
         script: |
-          sudo docker stop boot-prac-ci
-          sudo docker rm boot-prac-ci
-          sudo docker run -it -d -p 8080:8080 --name boot-prac-ci lucaskang134/boot-prac-ci
+          sudo docker stop ${{ env.DOCKER_CONTAINER }}
+          sudo docker rm ${{ env.DOCKER_CONTAINER }}
+          sudo docker run -it -d -p 8080:8080 --name ${{ env.DOCKER_CONTAINER }} ${{ secrets.DOCKERHUB_USERNAME }}/${{DOCKER_IMAGE_NAME}}
 
     # (11) REMOVE Github IP FROM security group
     - name: Remove IP FROM security group
