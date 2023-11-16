@@ -80,6 +80,7 @@ jobs:
         script: |
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
           sudo docker stop docker-cicd
+          sudo docker rm docker-cicd
           sudo docker run --name docker-cicd -it -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/docker-prac-ci
           udo docker system prune -f
 
